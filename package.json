@@ -5,12 +5,15 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -29,6 +32,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/throttler": "^3.1.0",
     "@prisma/client": "^4.5.0",
+    "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "dayjs": "^1.11.6",
@@ -49,6 +53,7 @@
     "@nestjs/mapped-types": "^1.2.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.14",
     "@types/jest": "27.4.1",
     "@types/lodash": "^4.14.186",

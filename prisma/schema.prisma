@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// yarn prisma studio 启动
+// yarn prisma db push 推送同步模型到数据库
+// yarn prisma migrate dev --name init 同步影子数据库
+// datasource db {
+//   provider = "mysql"
+//   url      = env("DATABASE_URL")
+// }
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Role {
+  id        Int        @id @unique @default(autoincrement())
+  role_name String     @unique
+  role_desc String     @default("")
+  create_at DateTime   @default(now())
+  update_at DateTime   @default(now())
+  User      User[]
+  RoleMenu  RoleMenu[]
+
+  // 表名
+  @@map("roles")
+}
+
+model User {
+  id         Int      @id @unique @default(autoincrement())
+  user_name  String   @unique
+  email      String   @unique
+  password   String   @default("")
+  avatar_url String   @default("/user/default_user_avatar.png")
+  rid        Int
+  rids       Role     @relation(fields: [rid], references: [id], onDelete: Restrict)
+  create_at  DateTime @default(now())
+  update_at  DateTime @default(now())
+  Book       Book[]
+
+  // 表名
+  @@map("users")
+}
+
+model Menu {
+  id        Int        @id @unique @default(autoincrement())
+  menu_name String     @unique @default("")
+  menu_path String     @unique @default("")
+  parent_id Int        @default(0)
+  menu_icon String?
+  create_at DateTime   @default(now())
+  update_at DateTime   @default(now())
+  RoleMenu  RoleMenu[]
+
+  // 表名
+  @@map("menus")
+}
+
+model RoleMenu {
+  id        Int      @id @unique @default(autoincrement())
+  enable    Boolean  @default(true)
+  rid       Int
+  rids      Role?    @relation(fields: [rid], references: [id])
+  mid       Int
+  mids      Menu?    @relation(fields: [mid], references: [id])
+  create_at DateTime @default(now())
+  update_at DateTime @default(now())
+
+  // 表名
+  @@map("role_menus")
+}
+
+// Book
+model Book {
+  id        Int      @id @unique @default(autoincrement())
+  book_name String   @unique @default("")
+  book_url  String   @default("")
+  uid       Int
+  uids      User?    @relation(fields: [uid], references: [id])
+  create_at DateTime @default(now())
+  update_at DateTime @default(now())
+
+  // 表名
+  @@map("Books")
+}
