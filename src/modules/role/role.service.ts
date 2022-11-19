@@ -1,5 +1,5 @@
 import { PrismaService } from './../prisma/prisma.service'
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { CreateRoleDto } from './dto/create-role.dto'
 import { UpdateRoleDto } from './dto/update-role.dto'
 
@@ -15,13 +15,17 @@ export class RoleService {
   async findAll() {
     return await this.prisma.role.findMany()
   }
-  
+
   async update(updateRoleDto: UpdateRoleDto) {
     const { id, ...data } = updateRoleDto
     return await this.prisma.role.update({ where: { id: +id }, data })
   }
 
   async remove(id: number) {
+    const findUser = await this.prisma.user.findMany({ where: { rid: id } })
+    if (findUser.length) {
+      throw new BadRequestException({ message: ['还有用户绑定该角色，无法删除'] })
+    }
     return this.prisma.role.delete({ where: { id } })
   }
 }

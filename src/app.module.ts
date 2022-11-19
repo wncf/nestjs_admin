@@ -5,6 +5,8 @@ import { UserModule } from './modules/user/user.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { RoleModule } from './modules/role/role.module';
+import { MenuModule } from './modules/menu/menu.module';
+import { RolemenuModule } from './modules/rolemenu/rolemenu.module';
 import app from './config/app.config'
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import app from './config/app.config'
     PrismaModule,
     UploadModule,
     RoleModule,
+    MenuModule,
+    RolemenuModule,
   ],
   providers: [],
 })

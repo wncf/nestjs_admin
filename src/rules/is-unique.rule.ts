@@ -1,10 +1,9 @@
+import { isInt, registerDecorator, ValidationArguments, ValidationOptions } from 'class-validator'
 import { PrismaService } from '../modules/prisma/prisma.service'
-import { registerDecorator, ValidationArguments, ValidationOptions } from 'class-validator'
-
 /*
 检查一个表里一个字段的值，除了自己，是否还有其他的，需要当前的id字段
 */
-export function IsUniue(table: string, validationOptions?: ValidationOptions) {
+export function IsUnique(table: string, validationOptions?: ValidationOptions) {
   return function (object: Record<string, any>, propertyName: string) {
     registerDecorator({
       name: 'IsUniue',
@@ -15,6 +14,8 @@ export function IsUniue(table: string, validationOptions?: ValidationOptions) {
       validator: {
         async validate(value: string, args: ValidationArguments) {
           if (!value) return true
+          if (!isInt(+args.object['id'])) return true
+          if (args.object['id']) return true
           const prisma = new PrismaService()
           const res = await prisma[table].findMany({
             where: {

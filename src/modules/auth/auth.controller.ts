@@ -40,4 +40,9 @@ export class AuthController {
   getUserInfo(@User() user: UserType) {
     return user
   }
+  @Get('/menu')
+  @Auth()
+  getUserMenu(@User() user: UserType) {
+    return this.authService.getAuthMenu(user.rid)
+  }
 }

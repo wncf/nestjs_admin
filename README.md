@@ -1,14 +1,13 @@
 
 
-nestjs REST风格的api脚手架
+## 基于nestjs 的REST风格的api脚手架
 
+接口预览：   [接口文档](https://console-docs.apipost.cn/preview/cf3a6b43a300095a/4c88b6061af0a97c)
 
-
-
-# 常用命令
-- 重置数据库并执行 seed命令填充数据库
-> npx prisma migrate reset
-
-- 只填充不重置数据库
-> prisma db seed
-
+安装步骤
+1. 克隆本项目
+2. 安装依赖
+3. 将.env.example修改为.env文件，并修改成自己的mysql DATABASE_URL与TOKEN_SECRET_KEY
+4. 执行 `yarn prisma migrate dev` 将模型创建成迁移文件并进行sql迁移
+5. 执行`yarn prisma db seed ` 执行初始数据填充
+6. 执行`yarn dev` 启动项目 

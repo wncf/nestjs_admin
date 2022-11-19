@@ -1,6 +1,5 @@
 import { IsNotExistsRule } from '@/rules/is-not-exists.rule'
-import { IsUniue } from '@/rules/is-unique.rule'
-import { IsAlpha, IsNotEmpty, Length } from 'class-validator'
+import { IsNotEmpty } from 'class-validator'
 
 export class CreateRoleDto {
   @IsNotExistsRule('role', { message: '角色名已经存在' })

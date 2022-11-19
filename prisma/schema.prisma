@@ -8,14 +8,22 @@ generator client {
 // yarn prisma studio 启动
 // yarn prisma db push 推送同步模型到数据库
 // yarn prisma migrate dev --name init 同步影子数据库
-// datasource db {
-//   provider = "mysql"
-//   url      = env("DATABASE_URL")
-// }
+// - 重置数据库并执行 seed命令填充数据库
+//  npx prisma migrate reset
+// - 只填充不重置数据库
+//  prisma db seed
+
+// mysql配置
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
+
+// sqlite 配置
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:./dev.db"
+// }
 
 model Role {
   id        Int        @id @unique @default(autoincrement())
@@ -40,7 +48,6 @@ model User {
   rids       Role     @relation(fields: [rid], references: [id], onDelete: Restrict)
   create_at  DateTime @default(now())
   update_at  DateTime @default(now())
-  Book       Book[]
 
   // 表名
   @@map("users")
@@ -64,26 +71,12 @@ model RoleMenu {
   id        Int      @id @unique @default(autoincrement())
   enable    Boolean  @default(true)
   rid       Int
-  rids      Role?    @relation(fields: [rid], references: [id])
+  rids      Role?    @relation(fields: [rid], references: [id], onDelete: Cascade)
   mid       Int
-  mids      Menu?    @relation(fields: [mid], references: [id])
+  mids      Menu?    @relation(fields: [mid], references: [id], onDelete: Cascade)
   create_at DateTime @default(now())
   update_at DateTime @default(now())
 
   // 表名
   @@map("role_menus")
-}
-
-// Book
-model Book {
-  id        Int      @id @unique @default(autoincrement())
-  book_name String   @unique @default("")
-  book_url  String   @default("")
-  uid       Int
-  uids      User?    @relation(fields: [uid], references: [id])
-  create_at DateTime @default(now())
-  update_at DateTime @default(now())
-
-  // 表名
-  @@map("Books")
 }

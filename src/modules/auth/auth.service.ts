@@ -1,3 +1,4 @@
+import { hindleMenuTree } from '@/utils'
 import { getUserByIdDto } from './dto/userInfo.dto'
 import { updateRoleDto } from './dto/updateRole.dto'
 import { BadRequestException, Injectable } from '@nestjs/common'
@@ -46,14 +47,21 @@ export class AuthService {
   }
   async updateUserRole(userData: updateRoleDto) {
     const res = await this.prisma.user.update({
-      where: { id: userData.uid },
+      where: { id: +userData.uid },
       data: {
-        rid: userData.rid,
+        rid: +userData.rid,
       },
     })
     return res ? res.id : false
   }
   async getUserById(data: getUserByIdDto) {
     return await this.prisma.user.findUnique({ where: { id: data.id }, include: { rids: true } })
+  }
+  async getAuthMenu(rid: number) {
+    const authMenu = await this.prisma.roleMenu.findMany({
+      where: { rid: rid },
+      include: { mids: true },
+    })
+    return hindleMenuTree(authMenu.map((item) => item.mids))
   }
 }

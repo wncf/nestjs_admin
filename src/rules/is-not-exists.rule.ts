@@ -5,6 +5,7 @@ import { registerDecorator, ValidationArguments, ValidationOptions } from 'class
 检查一个表下某个字段的值是否不存在
 不存在 通过
 存在 抛出错误
+常用于新增时判断字段重复
 */
 export function IsNotExistsRule(table: string, validationOptions?: ValidationOptions) {
   return function (object: Record<string, any>, propertyName: string) {

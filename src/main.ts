@@ -9,7 +9,7 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
   // 异常管道与异常过滤器
-  app.useGlobalPipes(new Validate({ whitelist: true, stopAtFirstError: true }))
+  app.useGlobalPipes(new Validate({ whitelist: false, stopAtFirstError: true }))
   app.useGlobalFilters(new ValidateExceptionFilter())
   // 拦截器
   app.useGlobalInterceptors(new TransformInterceptor())

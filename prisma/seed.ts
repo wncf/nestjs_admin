@@ -1,24 +1,27 @@
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 import { staticData } from './static/index'
 const prisma = new PrismaClient()
 
-const Fun = async (arry: any[], fun: Function) => {
-  for (let i = 0; i < arry.length; i++) {
-    await fun(arry[i])
+type Arryloop = {
+  table: string
+  values: any[]
+}[]
+const Fun = async (arry: Arryloop) => {
+  for (let item of arry) {
+    for (let i = 0; i < item.values.length; i++) {
+      try {
+        await prisma[item.table].create({ data: item.values[i] })
+      } catch (err) {
+        console.log(err)
+      }
+    }
   }
 }
+Fun([
+  { table: 'role', values: staticData.roles },
+  { table: 'user', values: staticData.users },
+  { table: 'menu', values: staticData.menus },
+  { table: 'roleMenu', values: staticData.roleMenus },
+])
 
-const bootstrapDb = async (P: PrismaClient) => {
-  await Fun(staticData.Roles(), async (item) => {
-    await prisma.role.create({
-      data: item,
-    })
-  }),
-  await Fun(staticData.users(), async (item) => {
-    await prisma.user.create({
-      data: item,
-    })
-  })
-}
-
-bootstrapDb(prisma)
+// bootstrapDb(prisma)
