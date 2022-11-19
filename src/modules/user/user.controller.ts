@@ -1,9 +1,9 @@
 import { Controller, Get } from '@nestjs/common'
 
-@Controller('user')
+@Controller()
 export class UserController {
-  @Get('/all')
+  @Get('')
   getFileInfo() {
-    return 'hellow'
+    return 'hellow word'
   }
 }
