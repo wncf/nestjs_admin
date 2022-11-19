@@ -9,7 +9,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "engines": {
-    "node": "16.15.0"
+    "node": "16.18.1"
   },
   "scripts": {
     "prebuild": "rimraf dist",
