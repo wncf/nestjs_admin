@@ -1,6 +1,10 @@
+## 基于nestjs 后台管理系统
 
+基于rabc进行单角色权限控制
+封装分页，搜索，排序功能接口参数处理
+封装多个dto异步验证装饰器，例如在更新，删除前验证id的真实性
+合并token鉴权与角色验证装饰器，非可通过的角色访问接口时报403
 
-## 基于nestjs 的REST风格的api脚手架
 
 接口预览：   [接口文档](https://console-docs.apipost.cn/preview/cf3a6b43a300095a/4c88b6061af0a97c)
 
