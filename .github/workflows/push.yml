@@ -18,9 +18,9 @@ jobs:
             # 安装Node10
             - name: 安装node.js
               # 使用action库  actions/setup-node安装node
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2.5.1
               with:
-                  node-version: 16.15.0
+                  node-version: "14.X"
 
             # 安装依赖
             - name: 安装依赖
