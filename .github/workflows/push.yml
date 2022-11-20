@@ -32,7 +32,7 @@ jobs:
 
             # 上传阿里云
             - name: 发布到腾讯云
-              uses: appleboy/scp-action@0.1.3
+              uses: appleboy/scp-action@master
               with:
                  host: ${{ secrets.REMOTE_HOST }}
                  username: ${{ secrets.USERNAME }}
